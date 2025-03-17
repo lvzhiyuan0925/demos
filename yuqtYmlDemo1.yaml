@@ -15,12 +15,12 @@ windowCreated:
       size: {width: "{< window.width() >} :int", height: 33}
       LuaScript: |
         function update()
-          button1.setText(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
+          button1.setText(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         end
         
         timer = QTimer(window)
         signalCall(timer.timeout, update)
-        timer.start(1)
+        timer.start(100)
 
 windowResized:
   LuaScript: |

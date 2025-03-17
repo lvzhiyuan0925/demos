@@ -1,21 +1,27 @@
 run:
   YuanGuiScript: |
     $Lua | run
-    $app | font: "Microsoft YaHei", 12
+    $app | font: "Microsoft YaHei", 12//int
     $app | importPackage: "datetime"
     $app | createWindow
     $app | run
+
 windowCreated:
   windowSize: {width: 800, height: 600}
   button:
     button1:
       show: true
-      text: "{< datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') >}   (点击更新)"
-      size: {width: "{< window.width() >} :int", height: 37}
-      onClicked: "btn1Clicked"
-btn1Clicked:
-  LuaScript: |
-    button1.setText(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+      text: "加载中"
+      size: {width: "{< window.width() >} :int", height: 33}
+      LuaScript: |
+        function update()
+          button1.setText(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
+        end
+        
+        timer = QTimer(window)
+        signalCall(timer.timeout, update)
+        timer.start(1)
+
 windowResized:
   LuaScript: |
     if button1 ~= nil then
